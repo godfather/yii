@@ -2665,9 +2665,10 @@ EOD;
 	 * contains square brackets (mainly used in tabular input) before the real attribute name.
 	 * @param CModel $model the data model
 	 * @param string $attribute the attribute
+   * @param mixed $index the index used to identify multiple uploads
 	 * @return string the input name
 	 */
-	public static function resolveName($model,&$attribute)
+	public static function resolveName($model,&$attribute, $index = null)
 	{
 		$modelName=self::modelName($model);
 
@@ -2688,7 +2689,8 @@ EOD;
 				return $name;
 			}
 		}
-		return $modelName.'['.$attribute.']';
+    $index = !is_null($index) ? "[$index]" : '';  //if the index is passed...
+    return "{$modelName}{$index}[{$attribute}]";  //...it will be added to attribute name
 	}
 
 	/**
